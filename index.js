@@ -20,11 +20,12 @@ async function main() {
     for (let currentBlockNumber = blockNumberStart; currentBlockNumber < blockNumberEnd; currentBlockNumber++) {
 
         const { transactions } = await getBlock(currentBlockNumber);
-        console.log(transactions)
         for (let index = 0; index < transactions.length; index++) {
             let txHash = transactions[index];
-            let { from } = await getTransaction(txHash);
+            let { from, to } = await getTransaction(txHash);
+            console.log(`${currentBlockNumber}/${blockNumberEnd}: ${from} ${to}`);
             accountSet.add(from);    
+            accountSet.add(to); 
         }
     }
 
